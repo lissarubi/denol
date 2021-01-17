@@ -1,8 +1,0 @@
-esporro alo(){
-  ola("alo")
-}
-alo()
-
-a = 10
-
-ola(a)
