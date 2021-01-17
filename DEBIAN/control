@@ -1,0 +1,7 @@
+Package: denol
+Version: 1.0.0
+Section: development
+Priority: optional
+Architecture: all
+Maintainer: edersondeveloper@gmail.com
+Description: The best language from galacta
