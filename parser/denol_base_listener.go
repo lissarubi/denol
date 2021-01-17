@@ -27,6 +27,18 @@ func (s *BaseDenolListener) EnterParen_expr(ctx *Paren_exprContext) {}
 // ExitParen_expr is called when production paren_expr is exited.
 func (s *BaseDenolListener) ExitParen_expr(ctx *Paren_exprContext) {}
 
+// EnterSqrt_expr is called when production sqrt_expr is entered.
+func (s *BaseDenolListener) EnterSqrt_expr(ctx *Sqrt_exprContext) {}
+
+// ExitSqrt_expr is called when production sqrt_expr is exited.
+func (s *BaseDenolListener) ExitSqrt_expr(ctx *Sqrt_exprContext) {}
+
+// EnterKeys_expr is called when production keys_expr is entered.
+func (s *BaseDenolListener) EnterKeys_expr(ctx *Keys_exprContext) {}
+
+// ExitKeys_expr is called when production keys_expr is exited.
+func (s *BaseDenolListener) ExitKeys_expr(ctx *Keys_exprContext) {}
+
 // EnterExpr is called when production expr is entered.
 func (s *BaseDenolListener) EnterExpr(ctx *ExprContext) {}
 

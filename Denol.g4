@@ -1,20 +1,29 @@
 grammar Denol;
 
-INT    : [0-9]+;
-DOUBLE : [0-9]+'.'[0-9]+;
+NUMBER : [0-9]+ | [0-9]+'.'[0-9]+;
 PI     : 'pi';
 POW    : '^';
-NL     : '\n';
-WS     : [ \t\r]+ -> skip;
+NL     : '\n' | '\r' | '\r\n';
+WS     : [ n\t\r]+;
+TWOPOINS: ':';
 ID     : [a-zA-Z_][a-zA-Z_0-9]*;
 
 SPACE : ' ';
 
 STRING : '"' ~('\r' | '\n' | '"')* '"' | '\'' ~('\r' | '\n' | '\'')* '\'';
 
+PAREN_START: '(';
+SQRT_START: '[';
+KEYS_START: '{';
 
 paren_expr
    : '(' expr ')'
+   ;
+sqrt_expr
+   : '[' expr ']'
+   ;
+keys_expr
+   : '{' expr '}'
    ;
 expr
    : test
@@ -31,7 +40,7 @@ sum
    ;
 term
    : ID
-   | INT
+   | NUMBER
    | paren_expr
    ;
 

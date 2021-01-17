@@ -2,64 +2,93 @@ package main
 
 import (
 	"fmt"
-	"parser/parser"
 	"os"
+	"parser/parser"
+	"strings"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr"
 )
+
+var tokensName []string
+var phpWords = []string{"echo", "if", "else", "elseif", "for", "do", "switch", "case", "try", "catch", "continue", "finally", "default", "while", "break", "exit", "function", "import", "print", "return", "require", "halt_compiler()","abstract","array()","as","break","callable","class","clone","const","declare","die()","empty()","enddeclare","endfor","endforeach","endif","endswitch","endwhile","eval()","extends","final","fn","foreach","global","goto","implements","include","include_once","instanceof","insteadof","interface","isset()","list()","namespace","new","or","private","protected","public","require_once","static","throw","trait","unset()","use","var","xor","yield"}
+var denolWords = []string{"ola", "salve", "naosalvou", "outrosalve","pamonhosa", "day","teste", "sepa", "tenta", "pega", "mandabala", "amain", "padraozao", "zoeira", "cancelar", "deno", "esporro", "!important", "printa", "veio", "pediu"}
 
 type denolListener struct {
 	*parser.BaseDenolListener
 }
 
 func addText(tokenText string, tokenName string) string{
+	tokensName = append(tokensName, tokenName)
 	if tokenName == "NL"{
+		fmt.Println(tokensName[len(tokensName) - 2])
+		if tokensName[len(tokensName) - 2] != "TWOPOINS" && tokensName[len(tokensName) - 2] != "PAREN_START" && tokensName[len(tokensName) - 2] != "SQRT_START" && tokensName[len(tokensName) - 2] != "KEYS_START"{
+			return ";\n"
+		}
 		return "\n"
-	}else if tokenName == "ID"{
-		return "$" + tokenText
+	}else if contains(phpWords, tokenText) && tokenName != "STRING"{
+		return tokenText
+	}else if tokenText == "+" && tokensName[len(tokensName) - 2] == "STRING"{
+		return "."
 	}else if tokenName == "PI"{
 		return "3.1415"
-	}else if tokenText == "ola"{
-		return "echo"
-	}else if tokenText == "salve"{
-		return "if"
-	}else if tokenText == "pamonhosa"{
-		return "for"
-	}else if tokenText == "day"{
-		return "do"
-	}else if tokenText == "zoeira"{
-		return "while"
+	}else if contains(denolWords, tokenText) && tokenName != "STRING"{
+		return phpWords[IndexOf(denolWords, tokenText)]
+	}else if tokenName == "ID"{
+		return "$" + tokenText
+	}else if tokenName == "WS"{
+		return " "
 	}
 	return tokenText
 }
 
 func main() {
-	input, _ := antlr.NewFileStream("hello.denol")
-	lexer := parser.NewDenolLexer(input)
-	output := "<?php\n"
-	for {
-		t := lexer.NextToken()
-		if t.GetTokenType() == antlr.TokenEOF {
-			break
+
+	os.Mkdir("build", 0755)
+
+	for i := 1; i < len(os.Args); i++{
+
+		input, _ := antlr.NewFileStream(os.Args[i])
+		lexer := parser.NewDenolLexer(input)
+		output := "<?php\n"
+		for {
+			t := lexer.NextToken()
+			if t.GetTokenType() == antlr.TokenEOF {
+				break
+			}
+			output += addText(t.GetText(), lexer.SymbolicNames[t.GetTokenType()])
 		}
-		fmt.Printf("%s (%q)\n",
-		lexer.SymbolicNames[t.GetTokenType()], t.GetText())
-		output += addText(t.GetText(), lexer.SymbolicNames[t.GetTokenType()])
+		f, err := os.Create( "build/" + strings.Replace(os.Args[i], ".denol", ".php", -1))
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		_, err = f.WriteString(output)
+		if err != nil {
+			fmt.Println(err)
+			f.Close()
+			return
+		}
+		err = f.Close()
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
 	}
-	f, err := os.Create("index.php")
-	if err != nil {
-		fmt.Println(err)
-		return
+}
+
+func contains(arr []string, str string) bool {
+	for _, a := range arr {
+		if a == str {
+			return true
+		}
 	}
-	_, err = f.WriteString(output)
-	if err != nil {
-		fmt.Println(err)
-		f.Close()
-		return
-	}
-	err = f.Close()
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+	return false
+}
+ func IndexOf(haystack []string, str string) int {
+    for i, v := range haystack {
+        if v == str {
+            return i
+        }
+    }
+    return -1
 }
