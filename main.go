@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
-	"parser/parser"
+	"github.com/edersonferreira/denol/parser"
 	"strings"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr"
