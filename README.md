@@ -95,6 +95,37 @@ php build/hello.php
 | `veio`       |   `return` |
 | `zoeira`     |    `while` |
 
+# Code Examples
+
+Assign 10 to `a` and log `a`
+```
+a = 10
+ola(a)
+```
+
+Assign 20 to `b` and if `b` is 20 log a "b is 20"
+
+```
+b = 20
+
+salve (b == 20){
+  ola ("b is 20")
+}
+```
+
+Create a `alo` function, execute alo, assing 10 to `a` and log `a`
+
+```
+esporro alo(){
+  ola("alo")
+}
+alo()
+
+a = 10
+
+ola(a)
+```
+
 # Denol VS PHP
 
 - Denol is funnier than PHP

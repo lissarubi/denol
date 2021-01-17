@@ -10,6 +10,9 @@ import (
 )
 
 var tokensName []string
+var tokensText []string
+var functions []string
+
 var phpWords = []string{"echo", "if", "else", "elseif", "for", "do", "switch", "case", "try", "catch", "continue", "finally", "default", "while", "break", "exit", "function", "import", "print", "return", "require", "halt_compiler()","abstract","array()","as","break","callable","class","clone","const","declare","die()","empty()","enddeclare","endfor","endforeach","endif","endswitch","endwhile","eval()","extends","final","fn","foreach","global","goto","implements","include","include_once","instanceof","insteadof","interface","isset()","list()","namespace","new","or","private","protected","public","require_once","static","throw","trait","unset()","use","var","xor","yield"}
 var denolWords = []string{"ola", "salve", "naosalvou", "outrosalve","pamonhosa", "day","teste", "sepa", "tenta", "pega", "mandabala", "amain", "padraozao", "zoeira", "cancelar", "deno", "esporro", "!important", "printa", "veio", "pediu"}
 
@@ -18,14 +21,18 @@ type denolListener struct {
 }
 
 func addText(tokenText string, tokenName string) string{
-	tokensName = append(tokensName, tokenName)
+		tokensName = append(tokensName, tokenName)
+		if tokenName != "WS"{
+			tokensText = append(tokensText, tokenText)
+		}
 	if tokenName == "NL"{
-		fmt.Println(tokensName[len(tokensName) - 2])
 		if tokensName[len(tokensName) - 2] != "TWOPOINS" && tokensName[len(tokensName) - 2] != "PAREN_START" && tokensName[len(tokensName) - 2] != "SQRT_START" && tokensName[len(tokensName) - 2] != "KEYS_START"{
 			return ";\n"
 		}
 		return "\n"
 	}else if contains(phpWords, tokenText) && tokenName != "STRING"{
+		return tokenText
+	}else if contains(functions, tokenText){
 		return tokenText
 	}else if tokenText == "+" && tokensName[len(tokensName) - 2] == "STRING"{
 		return "."
@@ -34,7 +41,11 @@ func addText(tokenText string, tokenName string) string{
 	}else if contains(denolWords, tokenText) && tokenName != "STRING"{
 		return phpWords[IndexOf(denolWords, tokenText)]
 	}else if tokenName == "ID"{
-		return "$" + tokenText
+		if tokensText[len(tokensText) - 2] == "esporro"{
+			functions = append(functions, tokenText)	
+			return tokenText
+		}
+			return "$" + tokenText
 	}else if tokenName == "WS"{
 		return " "
 	}
