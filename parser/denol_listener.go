@@ -11,6 +11,12 @@ type DenolListener interface {
 	// EnterParen_expr is called when entering the paren_expr production.
 	EnterParen_expr(c *Paren_exprContext)
 
+	// EnterSqrt_expr is called when entering the sqrt_expr production.
+	EnterSqrt_expr(c *Sqrt_exprContext)
+
+	// EnterKeys_expr is called when entering the keys_expr production.
+	EnterKeys_expr(c *Keys_exprContext)
+
 	// EnterExpr is called when entering the expr production.
 	EnterExpr(c *ExprContext)
 
@@ -28,6 +34,12 @@ type DenolListener interface {
 
 	// ExitParen_expr is called when exiting the paren_expr production.
 	ExitParen_expr(c *Paren_exprContext)
+
+	// ExitSqrt_expr is called when exiting the sqrt_expr production.
+	ExitSqrt_expr(c *Sqrt_exprContext)
+
+	// ExitKeys_expr is called when exiting the keys_expr production.
+	ExitKeys_expr(c *Keys_exprContext)
 
 	// ExitExpr is called when exiting the expr production.
 	ExitExpr(c *ExprContext)
