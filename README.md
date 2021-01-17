@@ -2,9 +2,24 @@
 
 Denol Language is a ~~seriously~~ programming language. You write Denol code, and this code is parsed to PHP code.
 
+![Denol Logo](assets/logo.png)
+
 # Install
 
-## Using DEB
+## Windows
+
+get `denol.exe` with this method:
+
+```
+git clone https://github.com/edersonferreira/denol
+cd denol/builds
+```
+
+now, move `denol.exe` to a certain place (binaries directory). I know the path to this place? No! But I fell you know Kappa
+
+## Linux
+
+### Using DEB
 
 Run these commands:
 
@@ -15,7 +30,7 @@ cd denol
 sudo dpkg -i builds/denol.deb
 ```
 
-## Using Golang
+### Using Golang
 
 - [Install Golang](https://golang.org/)
 - Run `go install github.com/edersonferreira/denol`
