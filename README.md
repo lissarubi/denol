@@ -58,7 +58,14 @@ ola("Hello World")
 To execute, run:
 
 ```
-denol  hello.denol
+denol hello.denol
+```
+
+This command will parse Denol code to PHP code, and save it in a directory named `build`
+
+And now, you can execute the PHP code with this command:
+
+```
 php build/hello.php
 ```
 
