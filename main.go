@@ -60,7 +60,6 @@ func main() {
 
 		input, _ := antlr.NewFileStream(os.Args[i])
 		lexer := parser.NewDenolLexer(input)
-		fmt.Println(lexer.GetErrorHeader())
 		output := "<?php\n"
 		for {
 			t := lexer.NextToken()
