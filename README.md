@@ -11,7 +11,7 @@ Denol Language is a ~~seriously~~ programming language. You write Denol code, an
 get `denol.exe` with this method:
 
 ```
-git clone https://github.com/edersonferreira/denol
+git clone https://github.com/lissaferreira/denol
 cd denol/builds
 ```
 
@@ -25,7 +25,7 @@ Run these commands:
 
 ```
 cd /tmp
-git clone https://github.com/edersonferreira/denol
+git clone https://github.com/lissaferreira/denol
 cd denol
 sudo dpkg -i builds/denol.deb
 ```
@@ -33,7 +33,7 @@ sudo dpkg -i builds/denol.deb
 ### Using Golang
 
 - [Install Golang](https://golang.org/)
-- Run `go install github.com/edersonferreira/denol`
+- Run `go install github.com/lissaferreira/denol`
 
 # Using Denol
 
